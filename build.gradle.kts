@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     war
-    id("org.springframework.boot") version "3.1.2"
+    id("org.springframework.boot") version "2.7.12"
     id("io.spring.dependency-management") version "1.1.2"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
@@ -34,6 +34,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // 项目依赖
+//    implementation("com.jcraft:jsch:0.1.55")
+    implementation("com.hierynomus:sshj:0.30.0")
 }
 
 tasks.withType<KotlinCompile> {
