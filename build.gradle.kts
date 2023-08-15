@@ -44,6 +44,8 @@ dependencies {
     implementation("org.webjars:stomp-websocket:2.3.3")
     // SSH
     implementation("com.jcraft:jsch:0.1.55")
+    // logStash
+    implementation("net.logstash.logback:logstash-logback-encoder:6.6")
 }
 
 tasks.withType<KotlinCompile> {
