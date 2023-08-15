@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SSH Terminal</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div id="terminal"></div>
+<textarea id="command" cols="30" rows="10"></textarea>
+<button onclick="sendMessage($('#command').val())">发送</button>
+<button onclick="reconnect()">重新连接</button>
+
+<script>
+    let webSocket;
+
+    function connectWebSocket() {
+        webSocket = new WebSocket("ws://localhost:8080/ssh-terminal");
+
+        webSocket.onopen = function() {
+            console.log("WebSocket连接已建立");
+            // 可以在这里执行一些初始化操作
+        };
+
+        webSocket.onmessage = function(event) {
+            const message = event.data;
+            console.log("收到消息：" + message);
+            // 处理收到的消息
+        };
+
+        webSocket.onclose = function(event) {
+            console.log("WebSocket连接已关闭");
+            // 可以在这里执行一些清理操作
+        };
+
+        webSocket.onerror = function(event) {
+            console.error("WebSocket连接发生错误");
+            // 处理错误
+        };
+    }
+
+    function sendMessage(message) {
+        // 打印发送的消息
+        console.log("发送消息：" , message);
+        if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+            webSocket.send(message);
+        } else {
+            console.log("WebSocket连接未建立");
+        }
+    }
+
+    function reconnect() {
+        if (webSocket && (webSocket.readyState === WebSocket.CONNECTING || webSocket.readyState === WebSocket.OPEN)) {
+            console.log("WebSocket连接已存在");
+            return;
+        }
+
+        connectWebSocket();
+    }
+
+    // 初始化时建立连接
+    connectWebSocket();
+</script>
+</body>
+</html>

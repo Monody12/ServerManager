@@ -14,37 +14,24 @@ import javax.annotation.PreDestroy
 @RestController
 class ShellController {
 
-    @Volatile
-    private var isConnected = false
-
     @Autowired
     private lateinit var sshManager: SSHManager
 
     private val logger = LoggerFactory.getLogger(ShellController::class.java)
 
+
+    data class CommandStrings(val commands: List<String>)
     @PostMapping("/execute")
-    fun executeCommand(@RequestBody command: String): String {
-        // 建立 SSH 连接（仅在第一次调用时执行）
-        if (!isConnected) {
-            synchronized(this) {
-                if (!isConnected) {
-                    sshManager.connect("vm.local", 22, "root", "1234")
-                    isConnected = true
-                }
-            }
-        }
+    fun executeCommand(@RequestBody commands: CommandStrings): List<CommandExecuteRes> {
         // 执行命令
-        val output: String = sshManager.executeCommand(command)
-        // TODO 输出日志，打印命令和输出
-        logger.info("command: $command，output: $output")
+        val res = mutableListOf<CommandExecuteRes>()
+        for (command in commands.commands) {
+            val output = sshManager.executeCommand(command)
+            res.add(output)
+        }
         // 返回命令输出
-        return output
+        return res
     }
 
-    @PreDestroy
-    fun disconnect() {
-        // 断开 SSH 连接（在应用关闭时执行）
-        sshManager.disconnect()
-        isConnected = false
-    }
+
 }

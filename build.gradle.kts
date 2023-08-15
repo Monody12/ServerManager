@@ -37,6 +37,13 @@ dependencies {
     // 项目依赖
 //    implementation("com.jcraft:jsch:0.1.55")
     implementation("com.hierynomus:sshj:0.30.0")
+    // WebSocket
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.webjars:webjars-locator-core")
+    implementation("org.webjars:sockjs-client:1.0.2")
+    implementation("org.webjars:stomp-websocket:2.3.3")
+    // SSH
+    implementation("com.jcraft:jsch:0.1.55")
 }
 
 tasks.withType<KotlinCompile> {
