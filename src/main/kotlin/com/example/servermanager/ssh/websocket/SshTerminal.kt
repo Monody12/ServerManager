@@ -3,7 +3,6 @@ package com.example.servermanager.ssh.websocket
 import com.jcraft.jsch.ChannelShell
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
-import org.springframework.stereotype.Component
 
 class SshTerminal(private val host: String, private val port: Int, private val username: String, private val password: String) {
     private lateinit var session: Session

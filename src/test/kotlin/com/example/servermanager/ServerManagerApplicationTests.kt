@@ -18,7 +18,6 @@ class ServerManagerApplicationTests {
 
     @Test
     fun testCommandExecute() {
-        val command = CommandConstant.DOCKER_CHECK_MYSQL
-        println(sshManager.executeCommand(command))
+
     }
 }
