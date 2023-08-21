@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration>
+    <!--获取Spring应用名称-->
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-
-    <springProperty scope="context" name="appName" source="spring.application.name"/>
 
     <!-- 日志在工程中的输出位置 -->
     <property name="LOG_FILE" value="${BUILD_FOLDER:-build}/${appName}"/>
@@ -37,11 +37,13 @@
                     <pattern>
                         {
                         "logLevel": "%level",
-                        "serviceName": "${springAppName:-}",
+                        "serviceName": "${springAppName}",
                         "pid": "${PID:-}",
                         "thread": "%thread",
                         "class": "%logger{40}",
-                        "rest": "%message"
+                        "message": "%message",
+                        "stackTrace": "%ex{full}",
+                        "traceId": "%X{traceId:-}"
                         }
                     </pattern>
                 </pattern>
